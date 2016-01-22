@@ -59,6 +59,9 @@ public class Benutzer {
 		this.name = name;
 	}
 	
-	
+	@Override
+	public int hashCode() {
+		return this.name.hashCode() + this.adresse.hashCode();
+	}
 
 }

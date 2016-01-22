@@ -49,4 +49,8 @@ public class Name {
 		return titel;
 	}
 
+	@Override
+	public int hashCode() {
+		return this.vorname.hashCode() + this.nachname.hashCode() + this.anrede.hashCode() + this.titel.hashCode();
+	}
 }

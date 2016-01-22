@@ -61,5 +61,9 @@ public class Adresse {
 		return this.ort+" "+this.postleitzahl+" "+this.strasse+" "+this.hausnummer+" , "+this.land;
 	}
 
+	@Override
+	public int hashCode() {
+		return this.ort.hashCode() + this.postleitzahl + this.strasse.hashCode() + this.hausnummer.hashCode()+ this.land.hashCode();
+	}
 	
 }

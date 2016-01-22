@@ -56,6 +56,9 @@ public class Unternehmen {
 		this.adresse = adresse;
 	}
 	
-	
+	@Override
+	public int hashCode() {
+		return this.name.hashCode() + this.adresse.hashCode();
+	}
 
 }
