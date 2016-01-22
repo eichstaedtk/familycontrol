@@ -1,55 +1,64 @@
 package de.eichstaedt.domain.valueobjects;
 
+import javax.persistence.Embeddable;
+
+/*
+ * Immutable address value object class
+ */
+
+@Embeddable
 public class Adresse {
 	
-	public String ort;
+	private final String ort;
 	
-	public int postleitzahl;
+	private final int postleitzahl;
 	
-	public String strasse;
+	private final String strasse;
 	
-	public String hausnummer;
+	private final String hausnummer;
 	
-	public String land;
+	private final String land;
+	
+	protected Adresse() {
+		this.strasse = "";
+		this.postleitzahl = 0;
+		this.ort = "";
+		this.hausnummer = "";
+		this.land = "";
+	}
+	
+	public Adresse(String ort, int plz, String strasse, String hausnummer, String land)
+	{
+		super();
+		this.ort = ort;
+		this.postleitzahl = plz;
+		this.strasse = strasse;
+		this.hausnummer = hausnummer;
+		this.land = land;
+	}
 
 	public String getOrt() {
 		return ort;
-	}
-
-	public void setOrt(String ort) {
-		this.ort = ort;
 	}
 
 	public int getPostleitzahl() {
 		return postleitzahl;
 	}
 
-	public void setPostleitzahl(int postleitzahl) {
-		this.postleitzahl = postleitzahl;
-	}
-
 	public String getStrasse() {
 		return strasse;
-	}
-
-	public void setStrasse(String strasse) {
-		this.strasse = strasse;
 	}
 
 	public String getHausnummer() {
 		return hausnummer;
 	}
 
-	public void setHausnummer(String hausnummer) {
-		this.hausnummer = hausnummer;
-	}
-
 	public String getLand() {
 		return land;
 	}
-
-	public void setLand(String land) {
-		this.land = land;
+	
+	public String toString() {
+		return this.ort+" "+this.postleitzahl+" "+this.strasse+" "+this.hausnummer+" , "+this.land;
 	}
 
 	

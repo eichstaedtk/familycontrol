@@ -1,45 +1,52 @@
 package de.eichstaedt.domain.valueobjects;
 
-public class Name {
+import javax.persistence.Embeddable;
 
-	private String vorname;
+/*
+ * Immutable personal name value object class
+ */
+
+@Embeddable
+public class Name {
 	
-	private String nachname;
+	protected Name() {
+		super();
+		this.vorname = "";
+		this.nachname = "";
+		this.anrede = "";
+		this.titel = "";
+	};
 	
-	private String anrede;
+	public Name(String vorname, String nachname, String anrede, String titel) {
+		super();
+		this.vorname = vorname;
+		this.nachname = nachname;
+		this.anrede = anrede;
+		this.titel = titel;
+	}
+
+	private final String vorname;
 	
-	private String titel;
+	private final String nachname;
+	
+	private final String anrede;
+	
+	private final String titel;
 
 	public String getVorname() {
 		return vorname;
-	}
-
-	public void setVorname(String vorname) {
-		this.vorname = vorname;
 	}
 
 	public String getNachname() {
 		return nachname;
 	}
 
-	public void setNachname(String nachname) {
-		this.nachname = nachname;
-	}
-
 	public String getAnrede() {
 		return anrede;
-	}
-
-	public void setAnrede(String anrede) {
-		this.anrede = anrede;
 	}
 
 	public String getTitel() {
 		return titel;
 	}
 
-	public void setTitel(String titel) {
-		this.titel = titel;
-	}
-	
 }
