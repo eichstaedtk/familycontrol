@@ -9,10 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonInclude(Include.NON_NULL)
 @Entity
 @Table(name = "ausgaben")
 public class Ausgabe {
@@ -21,6 +20,8 @@ public class Ausgabe {
 	@Id
 	private int id;
 	
+	@JsonDeserialize(using = com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer.class)
 	private LocalDateTime date;
 	
 	private Double amount;
@@ -53,7 +54,7 @@ public class Ausgabe {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public LocalDateTime getDate() {
 		return date;
 	}
