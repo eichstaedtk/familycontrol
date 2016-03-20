@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 @SpringBootApplication
 @EnableJpaRepositories("de.eichstaedt")
@@ -20,4 +21,9 @@ public class FamilyappApplication {
 	    builder.indentOutput(true).simpleDateFormat("yyyy-MM-dd");
 	    return builder;
 	}
+	
+	@Bean
+    public Java8TimeDialect java8TimeDialect() {
+        return new Java8TimeDialect();
+    }
 }

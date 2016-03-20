@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Liste aller finanziellen Ausgaben</title>
+
+<meta charset="utf-8" />
+<meta name="description" content="Diese Seite stellt alle gebuchten Ausgaben eines Nutzers dar." />
+<meta name="author" content="Konrad Eichstädt" />
+</head>
+<body>
+<div id="ausgabenListe" th:unless="${#lists.isEmpty(allAusgaben)}">
+<table>
+<thead>
+	<tr>
+		<th>Nummer</th>
+		<th>Datum</th>
+		<th>Betrag</th>
+		<th>Beschreibung</th>
+	</tr>
+</thead>
+<tbody>
+	<tr  th:each="ausgabe : ${allAusgaben}">
+		<td th:text="${{ausgabe.id}}"></td>
+		<td th:text="${ausgabe.date != null ? #temporals.format(ausgabe.date,'yyyy-MM-dd HH:mm:ss') : '2016-03-20 10:00:00'}"></td>
+		<td th:text="${{ausgabe.amount}}"></td>
+		<td th:text="${{ausgabe.description}}"></td>
+	</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

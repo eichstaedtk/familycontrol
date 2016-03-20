@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "ausgaben")
@@ -52,7 +51,6 @@ public class Ausgabe {
 		this.id = id;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public LocalDateTime getDate() {
 		return date;
 	}

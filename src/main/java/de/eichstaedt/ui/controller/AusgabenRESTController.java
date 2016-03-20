@@ -1,6 +1,8 @@
 package de.eichstaedt.ui.controller;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import de.eichstaedt.domain.entities.Ausgabe;
 import de.eichstaedt.infrastructure.ports.AusgabenPort;
 
@@ -49,6 +51,18 @@ public class AusgabenRESTController {
 		
 		return new ResponseEntity<Ausgabe>(ausgabe,headers, HttpStatus.OK);
 
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<?> create(HttpServletRequest request, @RequestBody Ausgabe ausgabe) throws URISyntaxException {
+		
+		ausgabenPort.save(ausgabe);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(new URI(request.getRequestURI() + "/"+ ausgabe.getId()));
+		
+		return new ResponseEntity<Ausgabe>(ausgabe,headers, HttpStatus.CREATED);
+		
 	}
 	
 	
