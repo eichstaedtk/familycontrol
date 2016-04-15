@@ -60,5 +60,10 @@ public class Unternehmen {
 	public int hashCode() {
 		return this.name.hashCode() + this.adresse.hashCode();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+        return (this.id == ((Unternehmen)obj).getId());
+    }
 
 }

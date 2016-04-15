@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Ausgabe hinzufügen</title>
+
+<meta charset="utf-8" />
+<meta name="description" content="Diese Seite bietet die Möglichkeit eine Ausgabe hinzuzufügen" />
+<meta name="author" content="Konrad Eichstädt" />
+
+<link rel="stylesheet" type="text/css" href="../../jquery.datetimepicker.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../../jquery.datetimepicker.full.js"></script>
+</head>
+<body>
+<h2>Ausgabe hinzufügen</h2>
+<form action="#" th:action="@{/ausgaben/add}" th:object="${ausgabe}" method="post">
+<label>Datum</label>
+<input id="datetimepicker" type="datetime" th:field="*{date}"/>
+<label>Beschreibung</label>
+<input type="text" th:field="*{description}" />
+<label>Händler</label>
+<select th:field="*{haendler}">
+  <option th:each="unternehmen : ${alleUnternehmen}" 
+          th:value="${unternehmen.id}" 
+          th:text="${unternehmen.name}"></option>
+</select>
+<input type="submit" value="Ausgabe anlegen" />
+</form>
+<script>jQuery('#datetimepicker').datetimepicker({format:'d.m.Y H:i:s',
+		  lang:'de'});</script>
+</body>
+</html>

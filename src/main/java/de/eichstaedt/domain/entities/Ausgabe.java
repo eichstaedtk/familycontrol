@@ -9,6 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+/**
+ * The core entity which should also be the main aggregate.
+ */
 
 @Entity
 @Table(name = "ausgaben")
@@ -18,6 +23,7 @@ public class Ausgabe {
 	@Id
 	private int id;
 	
+	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	private LocalDateTime date;
 	
 	private Double amount;
@@ -32,7 +38,7 @@ public class Ausgabe {
 	@JoinColumn(name = "AUSG_UNTERNEHMEN")
 	private Unternehmen haendler;
 	
-	protected Ausgabe() {}
+	public Ausgabe() {}
 	
 	public Ausgabe(LocalDateTime date,Double amount, String description, Unternehmen haendler, Benutzer benutzer)
 	{
@@ -93,6 +99,9 @@ public class Ausgabe {
 
 	@Override
 	public int hashCode() {
-		return new Integer(date.hashCode() + amount.hashCode() + description.hashCode() + benutzer.hashCode());
+		if(date == null | amount ==null | description == null | benutzer == null)
+			return (int)(Math.random() * 10) + 1;
+		else
+			return new Integer(date.hashCode() + amount.hashCode() + description.hashCode() + benutzer.hashCode());
 	}
 }
