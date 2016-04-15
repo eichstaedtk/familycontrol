@@ -53,4 +53,10 @@ public class Name {
 	public int hashCode() {
 		return this.vorname.hashCode() + this.nachname.hashCode() + this.anrede.hashCode() + this.titel.hashCode();
 	}
+	
+	@Override
+	public String toString() {
+		
+		return this.vorname+" "+this.nachname;
+	}
 }

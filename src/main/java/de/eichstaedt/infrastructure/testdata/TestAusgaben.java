@@ -38,7 +38,11 @@ public class TestAusgaben implements InitializingBean{
 		Benutzer konrad = new Benutzer(new Name("Konrad", "Eichstädt", "Herr", "Diplom Ingenieur"), 
 				new Adresse("Rathenow", 14712, "Göttliner Dorfstrasse", "12a", "Deutschland") );
 		
+		Benutzer nicole = new Benutzer(new Name("Nicole", "Eichstädt", "Frau", "Diplom Verwaltungswirt"), 
+				new Adresse("Rathenow", 14712, "Göttliner Dorfstrasse", "12a", "Deutschland") );
+		
 		benutzerRepository.save(konrad);
+		benutzerRepository.save(nicole);
 		
 		Unternehmen kaufland = new Unternehmen("Kaufland Rathenow Süd",ksued );
 		Unternehmen obi = new Unternehmen("Obi Rathenow West",obiwest );

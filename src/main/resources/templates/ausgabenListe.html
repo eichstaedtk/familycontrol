@@ -16,6 +16,8 @@
 		<th>Datum</th>
 		<th>Betrag</th>
 		<th>Beschreibung</th>
+		<th>Händler</th>
+		<th>Benutzer</th>
 	</tr>
 </thead>
 <tbody>
@@ -24,6 +26,8 @@
 		<td th:text="${ausgabe.date != null ? #temporals.format(ausgabe.date,'yyyy-MM-dd HH:mm:ss') : '2016-03-20 10:00:00'}"></td>
 		<td th:text="${{ausgabe.amount}}"></td>
 		<td th:text="${{ausgabe.description}}"></td>
+		<td th:text="${{ausgabe.haendler.name}}"></td>
+		<td th:text="${{ausgabe.benutzer.name.toString()}}"></td>
 	</tr>
 </tbody>
 </table>

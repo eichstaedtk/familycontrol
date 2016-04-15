@@ -18,11 +18,18 @@
 <input id="datetimepicker" type="datetime" th:field="*{date}"/>
 <label>Beschreibung</label>
 <input type="text" th:field="*{description}" />
+<label>Betrag</label>
+<input type="text" th:field="*{amount}" />
 <label>Händler</label>
 <select th:field="*{haendler}">
   <option th:each="unternehmen : ${alleUnternehmen}" 
           th:value="${unternehmen.id}" 
           th:text="${unternehmen.name}"></option>
+</select>
+<select th:field="*{benutzer}">
+  <option th:each="benutzer : ${alleBenutzer}" 
+          th:value="${benutzer.id}" 
+          th:text="${benutzer.name.toString()}"></option>
 </select>
 <input type="submit" value="Ausgabe anlegen" />
 </form>

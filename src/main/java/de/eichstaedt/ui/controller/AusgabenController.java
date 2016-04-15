@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.eichstaedt.domain.entities.Ausgabe;
+import de.eichstaedt.domain.entities.Benutzer;
 import de.eichstaedt.domain.entities.Unternehmen;
 import de.eichstaedt.infrastructure.ports.AusgabenPort;
+import de.eichstaedt.infrastructure.ports.BenutzerPort;
 import de.eichstaedt.infrastructure.ports.UnternehmenPort;
 
 /**
@@ -34,15 +36,14 @@ import de.eichstaedt.infrastructure.ports.UnternehmenPort;
 @RequestMapping("/ausgaben")
 public class AusgabenController {
 	
-	private Ausgabe newAusgabe;
-	
 	@Autowired
 	private AusgabenPort ausgabenRepository;
 	
 	@Autowired
-	private UnternehmenPort unternehmenRepository;
+	private BenutzerPort benutzerRepository;
 	
-	private List<Unternehmen> alleUnternehmen;
+	@Autowired
+	private UnternehmenPort unternehmenRepository;
 
 	@RequestMapping("/ausgabenListe")
 	public String ausgabenListe(@RequestParam(required=false,defaultValue="date",name="sortfield") String sortField, 
@@ -103,20 +104,22 @@ public class AusgabenController {
 		+ausgabe.getId()
 		+" description "+ausgabe.getDescription()
 		+" date "+ausgabe.getDate()
-		+" händler: "+ausgabe.getHaendler().getName());
+		+" händler: "+ausgabe.getHaendler().getName()
+		+" betrag: "+ausgabe.getAmount());
 		
-		//ausgabenRepository.save(newAusgabe);
+		ausgabenRepository.save(ausgabe);
 		
-		return "ausgabenListe";
+		return "redirect:ausgabenListe";
 	}
 
 	@ModelAttribute("alleUnternehmen")
 	public List<Unternehmen> getAlleUnternehmen() {
 		return (List<Unternehmen>)unternehmenRepository.findAll();
 	}
-
-	public void setAlleUnternehmen(List<Unternehmen> alleUnternehmen) {
-		this.alleUnternehmen = alleUnternehmen;
+	
+	@ModelAttribute("alleBenutzer")
+	public List<Benutzer> getAlleBenutzer() {
+		return (List<Benutzer>)benutzerRepository.findAll();
 	}
 	
 	
