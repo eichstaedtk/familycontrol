@@ -18,90 +18,95 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "ausgaben")
 public class Ausgabe {
-	
-	@GeneratedValue
-	@Id
-	private int id;
-	
-	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-	private LocalDateTime date;
-	
-	private Double amount;
-	
-	private String description;
-	
-	@OneToOne
-	@JoinColumn(name = "AUSG_BENUTZER")
-	private Benutzer benutzer;
-	
-	@OneToOne
-	@JoinColumn(name = "AUSG_UNTERNEHMEN")
-	private Unternehmen haendler;
-	
-	public Ausgabe() {}
-	
-	public Ausgabe(LocalDateTime date,Double amount, String description, Unternehmen haendler, Benutzer benutzer)
-	{
-		this.date = date;
-		this.amount = amount;
-		this.description = description;
-		this.haendler = haendler;
-		this.benutzer = benutzer;
-	}
 
-	public int getId() {
-		return id;
-	}
+  @GeneratedValue
+  @Id
+  private int id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public LocalDateTime getDate() {
-		return date;
-	}
+  @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+  private LocalDateTime date;
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
+  private Double amount;
 
-	public Double getAmount() {
-		return amount;
-	}
+  private String description;
 
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
+  @OneToOne
+  @JoinColumn(name = "AUSG_BENUTZER")
+  private Benutzer benutzer;
 
-	public String getDescription() {
-		return description;
-	}
+  @OneToOne
+  @JoinColumn(name = "AUSG_UNTERNEHMEN")
+  private Unternehmen haendler;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public Ausgabe() {}
 
-	public Unternehmen getHaendler() {
-		return haendler;
-	}
+  public Ausgabe(LocalDateTime date, Double amount, String description, Unternehmen haendler,
+      Benutzer benutzer) {
+    this.date = date;
+    this.amount = amount;
+    this.description = description;
+    this.haendler = haendler;
+    this.benutzer = benutzer;
+  }
 
-	public void setHaendler(Unternehmen haendler) {
-		this.haendler = haendler;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public Benutzer getBenutzer() {
-		return benutzer;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public void setBenutzer(Benutzer benutzer) {
-		this.benutzer = benutzer;
-	}
+  public LocalDateTime getDate() {
+    return date;
+  }
 
-	@Override
-	public int hashCode() {
-		if(date == null | amount ==null | description == null | benutzer == null)
-			return (int)(Math.random() * 10) + 1;
-		else
-			return new Integer(date.hashCode() + amount.hashCode() + description.hashCode() + benutzer.hashCode());
-	}
+  public void setDate(LocalDateTime date) {
+    this.date = date;
+  }
+
+  public Double getAmount() {
+    return amount;
+  }
+
+  public void setAmount(Double amount) {
+    this.amount = amount;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Unternehmen getHaendler() {
+    return haendler;
+  }
+
+  public void setHaendler(Unternehmen haendler) {
+    this.haendler = haendler;
+  }
+
+  public Benutzer getBenutzer() {
+    return benutzer;
+  }
+
+  public void setBenutzer(Benutzer benutzer) {
+    this.benutzer = benutzer;
+  }
+
+  @Override
+  public int hashCode() {
+    if (date == null | amount == null | description == null | benutzer == null)
+      return (int) (Math.random() * 10) + 1;
+    else
+      return new Integer(
+          date.hashCode() + amount.hashCode() + description.hashCode() + benutzer.hashCode());
+  }
+
+  public static final class Builder {
+
+  }
 }
