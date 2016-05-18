@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -53,6 +55,8 @@ public class AusgabenController implements Observable {
   private UnternehmenPort unternehmenRepository;
 
   private List<Observer> ausgabenActionObserver = new ArrayList<Observer>();
+
+  private Logger logger = LoggerFactory.getLogger(AusgabenController.class);
 
   @RequestMapping("/ausgabenListe")
   public String ausgabenListe(
@@ -118,10 +122,10 @@ public class AusgabenController implements Observable {
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public String addAusgabe(@Valid Ausgabe ausgabe, BindingResult bindingResult, Model model) {
 
-    System.out.println("Trying to save the new Ausgabe: " + ausgabe.getId() + " description "
-        + ausgabe.getDescription() + " date " + ausgabe.getDate() + " händler: "
-        + ausgabe.getHaendler().getName() + " betrag: " + ausgabe.getAmount());
-
+    logger.info(
+        "Trying to save the new Ausgabe {} description {}  date {} Unternehmen {} Betrag {} ",
+        ausgabe.getId(), ausgabe.getDescription(), ausgabe.getDate(),
+        ausgabe.getHaendler().getName(), ausgabe.getAmount());
     ausgabenRepository.save(ausgabe);
 
     AusgabenActionEvent event = new AusgabenActionEvent(ausgabe, DomainEvent.TYP.AUSGABE_CREATE);

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
+import de.eichstaedt.domain.services.ReportObserver;
 import de.eichstaedt.domain.services.TransactionObserver;
 import de.eichstaedt.ui.controller.AusgabenController;
 
@@ -19,6 +20,10 @@ public class FamilyappApplication {
 
   @Autowired
   private AusgabenController controller;
+
+  private TransactionObserver transactionObserver;
+
+  private ReportObserver reportObserver;
 
   private static Logger logger = LoggerFactory.getLogger(FamilyappApplication.class);
 
@@ -43,7 +48,24 @@ public class FamilyappApplication {
   @Bean
   public TransactionObserver getTransactionObserver() {
 
-    return new TransactionObserver(controller);
+    if (this.transactionObserver == null) {
+      System.out.println("Erzeuge neuen TransactionObserver!");
+      return new TransactionObserver(controller);
+    } else {
+      System.out.println("Gebe bestehende Instanz Referenz zurück");
+      return this.transactionObserver;
+    }
+
+  }
+
+  @Bean
+  public ReportObserver getReportObserver() {
+
+    if (this.reportObserver == null) {
+      return new ReportObserver(controller);
+    } else {
+      return this.reportObserver;
+    }
 
   }
 }
