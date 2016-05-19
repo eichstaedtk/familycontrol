@@ -15,6 +15,7 @@ import de.eichstaedt.domain.entities.Benutzer;
 import de.eichstaedt.domain.entities.Unternehmen;
 import de.eichstaedt.domain.services.TransactionObserver;
 import de.eichstaedt.domain.valueobjects.Adresse;
+import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
 import de.eichstaedt.domain.valueobjects.Name;
 import de.eichstaedt.infrastructure.ports.BenutzerPort;
 import de.eichstaedt.infrastructure.ports.UnternehmenPort;
@@ -50,7 +51,8 @@ public class TransactionObserverTest {
     unternehmenRepository.save(testUnternehmen);
 
     Ausgabe ausgabe =
-        new Ausgabe(LocalDateTime.now(), 10.00, "Testausgabe", testUnternehmen, testNutzer);
+        new Ausgabe(LocalDateTime.now(), 10.00, "Testausgabe", testUnternehmen, testNutzer,
+            AusgabenKategorie.build("Lebensmittel", "Alle Ausgaben für Lebensmittel und Kosmetik"));
 
 
     controller.addAusgabe(ausgabe, null, null);

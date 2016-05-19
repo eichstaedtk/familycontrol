@@ -28,6 +28,8 @@ import de.eichstaedt.domain.events.AusgabenActionEvent;
 import de.eichstaedt.domain.events.DomainEvent;
 import de.eichstaedt.domain.services.Observable;
 import de.eichstaedt.domain.services.Observer;
+import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
+import de.eichstaedt.infrastructure.ports.AusgabenKategoriePort;
 import de.eichstaedt.infrastructure.ports.AusgabenPort;
 import de.eichstaedt.infrastructure.ports.BenutzerPort;
 import de.eichstaedt.infrastructure.ports.UnternehmenPort;
@@ -53,6 +55,9 @@ public class AusgabenController implements Observable {
 
   @Autowired
   private UnternehmenPort unternehmenRepository;
+
+  @Autowired
+  private AusgabenKategoriePort ausgabenKategorienRepository;
 
   private List<Observer> ausgabenActionObserver = new ArrayList<Observer>();
 
@@ -142,6 +147,11 @@ public class AusgabenController implements Observable {
   @ModelAttribute("alleBenutzer")
   public List<Benutzer> getAlleBenutzer() {
     return (List<Benutzer>) benutzerRepository.findAll();
+  }
+
+  @ModelAttribute("alleAusgabenKategorien")
+  public List<AusgabenKategorie> getAllKategories() {
+    return (List<AusgabenKategorie>) ausgabenKategorienRepository.findAll();
   }
 
   @Override

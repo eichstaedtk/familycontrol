@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
+
 /**
  * The core entity which should also be the main aggregate.
  */
@@ -38,15 +40,20 @@ public class Ausgabe {
   @JoinColumn(name = "AUSG_UNTERNEHMEN")
   private Unternehmen haendler;
 
+  @OneToOne
+  @JoinColumn(name = "AUSG_KATEGORIE")
+  private AusgabenKategorie kategorie;
+
   public Ausgabe() {}
 
   public Ausgabe(LocalDateTime date, Double amount, String description, Unternehmen haendler,
-      Benutzer benutzer) {
+      Benutzer benutzer, AusgabenKategorie kategorie) {
     this.date = date;
     this.amount = amount;
     this.description = description;
     this.haendler = haendler;
     this.benutzer = benutzer;
+    this.kategorie = kategorie;
   }
 
   public int getId() {
@@ -102,9 +109,19 @@ public class Ausgabe {
     if (date == null | amount == null | description == null | benutzer == null)
       return (int) (Math.random() * 10) + 1;
     else
-      return new Integer(
-          date.hashCode() + amount.hashCode() + description.hashCode() + benutzer.hashCode());
+      return new Integer(date.hashCode() + amount.hashCode() + description.hashCode()
+          + benutzer.hashCode() + kategorie.hashCode());
   }
+
+  public AusgabenKategorie getKategorie() {
+    return kategorie;
+  }
+
+  public void setKategorie(AusgabenKategorie kategorie) {
+    this.kategorie = kategorie;
+  }
+
+
 
   public static final class Builder {
 

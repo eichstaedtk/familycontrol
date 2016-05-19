@@ -31,6 +31,11 @@
           th:value="${benutzer.id}" 
           th:text="${benutzer.name.toString()}"></option>
 </select>
+<select th:field="*{kategorie}">
+  <option th:each="kategorie : ${alleAusgabenKategorien}" 
+          th:value="${kategorie.id}" 
+          th:text="${kategorie.name}"></option>
+</select>
 <input type="submit" value="Ausgabe anlegen" />
 </form>
 <script>jQuery('#datetimepicker').datetimepicker({format:'d.m.Y H:i:s',

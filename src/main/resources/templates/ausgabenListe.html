@@ -18,6 +18,7 @@
 		<th>Beschreibung</th>
 		<th>Händler</th>
 		<th>Benutzer</th>
+		<th>Kategorie</th>
 	</tr>
 </thead>
 <tbody>
@@ -28,6 +29,7 @@
 		<td th:text="${{ausgabe.description}}"></td>
 		<td th:text="${{ausgabe.haendler.name}}"></td>
 		<td th:text="${{ausgabe.benutzer.name.toString()}}"></td>
+		<td th:text="${{ausgabe.kategorie.name}}"></td>
 	</tr>
 </tbody>
 </table>

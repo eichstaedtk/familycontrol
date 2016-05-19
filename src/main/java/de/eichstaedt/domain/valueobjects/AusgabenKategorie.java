@@ -4,7 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "AusgabenKategorie")
+/**
+ * Class which represent a category of ausgaben entity. Important to group Ausgaben within a report.
+ */
+
+@Entity
 public class AusgabenKategorie {
 
   @Id
@@ -15,9 +19,7 @@ public class AusgabenKategorie {
 
   private String beschreibung;
 
-  private AusgabenKategorie() {
-    super();
-  }
+  public AusgabenKategorie() {}
 
   public static AusgabenKategorie build(String name, String beschreibung) {
     AusgabenKategorie kat = new AusgabenKategorie();
