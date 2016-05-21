@@ -36,7 +36,11 @@ public class AusgabenKategorieBericht {
     this.lastModified = lastModified;
   }
 
-  public double getBetrag() {
+  public int getId() {
+	return id;
+}
+
+public double getBetrag() {
     return betrag;
   }
 

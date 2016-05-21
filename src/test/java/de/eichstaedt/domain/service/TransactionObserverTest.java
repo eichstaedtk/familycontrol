@@ -2,6 +2,7 @@ package de.eichstaedt.domain.service;
 
 import java.time.LocalDateTime;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import de.eichstaedt.domain.services.TransactionObserver;
 import de.eichstaedt.domain.valueobjects.Adresse;
 import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
 import de.eichstaedt.domain.valueobjects.Name;
+import de.eichstaedt.infrastructure.ports.AusgabenKategoriePort;
 import de.eichstaedt.infrastructure.ports.BenutzerPort;
 import de.eichstaedt.infrastructure.ports.UnternehmenPort;
 import de.eichstaedt.ui.controller.AusgabenController;
@@ -37,6 +39,9 @@ public class TransactionObserverTest {
 
   @Autowired
   private TransactionObserver transactionObserver;
+  
+  @Autowired
+  private AusgabenKategoriePort ausgabenKategorieRepository;
 
   @Test
   public void testObserver() {
@@ -50,14 +55,18 @@ public class TransactionObserverTest {
 
     unternehmenRepository.save(testUnternehmen);
 
+    AusgabenKategorie katLebensmittel = AusgabenKategorie.build("Lebensmittel", "Alle Ausgaben für Lebensmittel und Kosmetik");
+    
+    ausgabenKategorieRepository.save(katLebensmittel);
+    
     Ausgabe ausgabe =
         new Ausgabe(LocalDateTime.now(), 10.00, "Testausgabe", testUnternehmen, testNutzer,
-            AusgabenKategorie.build("Lebensmittel", "Alle Ausgaben für Lebensmittel und Kosmetik"));
+            katLebensmittel);
 
 
     controller.addAusgabe(ausgabe, null, null);
 
-    org.junit.Assert.assertTrue(transactionObserver.getEmpfangendeAusgaben().size() == 1);
+    Assert.assertTrue(transactionObserver.getEmpfangendeAusgaben().size() == 1);
   }
 
 }

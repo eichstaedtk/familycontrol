@@ -8,28 +8,20 @@
 <meta name="author" content="Konrad Eichstädt" />
 </head>
 <body>
-<div id="ausgabenReport" th:unless="${#lists.isEmpty(alleAusgaben)}">
+<div id="ausgabenReport" th:unless="${#lists.isEmpty(reports)}">
 <table>
 <thead>
 	<tr>
-		<th>Nummer</th>
-		<th>Datum</th>
+		<th>Änderungsdatum</th>
 		<th>Betrag</th>
-		<th>Beschreibung</th>
-		<th>Händler</th>
-		<th>Benutzer</th>
 		<th>Kategorie</th>
 	</tr>
 </thead>
 <tbody>
-	<tr  th:each="ausgabe : ${alleAusgaben}">
-		<td th:text="${{ausgabe.id}}"></td>
-		<td th:text="${ausgabe.date != null ? #temporals.format(ausgabe.date,'yyyy-MM-dd HH:mm:ss') : '2016-03-20 10:00:00'}"></td>
-		<td th:text="${{ausgabe.amount}}"></td>
-		<td th:text="${{ausgabe.description}}"></td>
-		<td th:text="${{ausgabe.haendler.name}}"></td>
-		<td th:text="${{ausgabe.benutzer.name.toString()}}"></td>
-		<td th:text="${{ausgabe.kategorie.name}}"></td>
+	<tr  th:each="report : ${reports}">
+		<td th:text="${report.lastModified != null ? #temporals.format(report.lastModified,'yyyy-MM-dd HH:mm:ss') : '2016-03-20 10:00:00'}"></td>
+		<td th:text="${{report.betrag}}"></td>
+		<td th:text="${{report.kategorie.name}}"></td>
 	</tr>
 </tbody>
 </table>
