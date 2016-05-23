@@ -61,9 +61,13 @@ public class TestAusgaben implements InitializingBean {
 
     AusgabenKategorie katHaus =
         AusgabenKategorie.build("Haus", "Instandhaltungskosten Haus und Hof");
+    
+    AusgabenKategorie katSport =
+            AusgabenKategorie.build("Sport", "Vereins- und Kleidungskosten Sport");
 
     kategorieRepository.save(katHaus);
     kategorieRepository.save(katLebensmittel);
+    kategorieRepository.save(katSport);
 
     List<Ausgabe> testAusgaben = new ArrayList<Ausgabe>();
 
