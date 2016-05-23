@@ -6,6 +6,28 @@
 <meta charset="utf-8" />
 <meta name="description" content="Diese Seite stellt alle gebuchten Ausgaben eines Nutzers dar." />
 <meta name="author" content="Konrad Eichstädt" />
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script th:inline="javascript" type="text/javascript">
+    /*<![CDATA[*/
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(
+			[[${reportArray}]]
+        );
+
+        var options = {
+          title: 'Ausgabenübersicht je Kategorie',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+
+        chart.draw(data, options);
+      }
+      /*]]>*/
+    </script>
 </head>
 <body>
 <div id="ausgabenReport" th:unless="${#lists.isEmpty(reports)}">
@@ -25,6 +47,7 @@
 	</tr>
 </tbody>
 </table>
+<div id="piechart_3d" style="width: 900px; height: 500px;"></div>
 </div>
 </body>
 </html>
