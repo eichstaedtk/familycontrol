@@ -13,6 +13,7 @@ import de.eichstaedt.domain.entities.Benutzer;
 import de.eichstaedt.domain.entities.Unternehmen;
 import de.eichstaedt.domain.valueobjects.Adresse;
 import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
+import de.eichstaedt.domain.valueobjects.Authentication;
 import de.eichstaedt.domain.valueobjects.Name;
 import de.eichstaedt.infrastructure.ports.AusgabenKategoriePort;
 import de.eichstaedt.infrastructure.ports.AusgabenPort;
@@ -41,11 +42,13 @@ public class TestAusgaben implements InitializingBean {
     Adresse obiwest = new Adresse("Rathenow", 14712, "Genthiner Strasse", "12", "Deutschland");
 
     Benutzer konrad = new Benutzer(new Name("Konrad", "Eichstädt", "Herr", "Diplom Ingenieur"),
-        new Adresse("Rathenow", 14712, "Göttliner Dorfstrasse", "12a", "Deutschland"));
+        new Adresse("Rathenow", 14712, "Göttliner Dorfstrasse", "12a", "Deutschland"),
+        Authentication.build("konrad", "Start123"));
 
     Benutzer nicole =
         new Benutzer(new Name("Nicole", "Eichstädt", "Frau", "Diplom Verwaltungswirt"),
-            new Adresse("Rathenow", 14712, "Göttliner Dorfstrasse", "12a", "Deutschland"));
+            new Adresse("Rathenow", 14712, "Göttliner Dorfstrasse", "12a", "Deutschland"),
+            Authentication.build("nicole", "Start123"));
 
     benutzerRepository.save(konrad);
     benutzerRepository.save(nicole);
@@ -61,9 +64,9 @@ public class TestAusgaben implements InitializingBean {
 
     AusgabenKategorie katHaus =
         AusgabenKategorie.build("Haus", "Instandhaltungskosten Haus und Hof");
-    
+
     AusgabenKategorie katSport =
-            AusgabenKategorie.build("Sport", "Vereins- und Kleidungskosten Sport");
+        AusgabenKategorie.build("Sport", "Vereins- und Kleidungskosten Sport");
 
     kategorieRepository.save(katHaus);
     kategorieRepository.save(katLebensmittel);

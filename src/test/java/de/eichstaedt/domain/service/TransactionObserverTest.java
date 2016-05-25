@@ -17,6 +17,7 @@ import de.eichstaedt.domain.entities.Unternehmen;
 import de.eichstaedt.domain.services.TransactionObserver;
 import de.eichstaedt.domain.valueobjects.Adresse;
 import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
+import de.eichstaedt.domain.valueobjects.Authentication;
 import de.eichstaedt.domain.valueobjects.Name;
 import de.eichstaedt.infrastructure.ports.AusgabenKategoriePort;
 import de.eichstaedt.infrastructure.ports.BenutzerPort;
@@ -39,7 +40,7 @@ public class TransactionObserverTest {
 
   @Autowired
   private TransactionObserver transactionObserver;
-  
+
   @Autowired
   private AusgabenKategoriePort ausgabenKategorieRepository;
 
@@ -47,7 +48,8 @@ public class TransactionObserverTest {
   public void testObserver() {
 
     Benutzer testNutzer = new Benutzer(new Name("Konrad", "Eichstädt", "Herr", ""),
-        new Adresse("Rathenow", 14712, "Genthiner", "1a", "Deutschland"));
+        new Adresse("Rathenow", 14712, "Genthiner", "1a", "Deutschland"),
+        Authentication.build("konrad", "Start123"));
     benutzerRepository.save(testNutzer);
 
     Unternehmen testUnternehmen = new Unternehmen("Test Kaufland",
@@ -55,13 +57,13 @@ public class TransactionObserverTest {
 
     unternehmenRepository.save(testUnternehmen);
 
-    AusgabenKategorie katLebensmittel = AusgabenKategorie.build("Lebensmittel", "Alle Ausgaben für Lebensmittel und Kosmetik");
-    
+    AusgabenKategorie katLebensmittel =
+        AusgabenKategorie.build("Lebensmittel", "Alle Ausgaben für Lebensmittel und Kosmetik");
+
     ausgabenKategorieRepository.save(katLebensmittel);
-    
-    Ausgabe ausgabe =
-        new Ausgabe(LocalDateTime.now(), 10.00, "Testausgabe", testUnternehmen, testNutzer,
-            katLebensmittel);
+
+    Ausgabe ausgabe = new Ausgabe(LocalDateTime.now(), 10.00, "Testausgabe", testUnternehmen,
+        testNutzer, katLebensmittel);
 
 
     controller.addAusgabe(ausgabe, null, null);

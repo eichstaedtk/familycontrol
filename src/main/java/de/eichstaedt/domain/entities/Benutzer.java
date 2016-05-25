@@ -9,59 +9,70 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import de.eichstaedt.domain.valueobjects.Adresse;
+import de.eichstaedt.domain.valueobjects.Authentication;
 import de.eichstaedt.domain.valueobjects.Name;
 
 @Entity
 @Table(name = "BENUTZER")
 public class Benutzer {
-	
-	@Id
-	@GeneratedValue
-	private int id;
-	
-	@Embedded
-	@AttributeOverride(name ="ADRESSE", column = @Column(name = "BENUTZER_ADRESSE"))
-	private Adresse adresse;
-	
-	@Embedded
-	@AttributeOverride(name ="NAME", column = @Column(name = "BENUTZER_NAME"))
-	private Name name;
-	
-	protected Benutzer() {}
 
-	public Benutzer(Name name,Adresse adresse) {
-		super();
-		this.adresse = adresse;
-		this.name = name;
-	}
+  @Id
+  @GeneratedValue
+  private int id;
 
-	public int getId() {
-		return id;
-	}
+  @Embedded
+  @AttributeOverride(name = "ADRESSE", column = @Column(name = "BENUTZER_ADRESSE") )
+  private Adresse adresse;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  @Embedded
+  @AttributeOverride(name = "NAME", column = @Column(name = "BENUTZER_NAME") )
+  private Name name;
 
-	public Adresse getAdresse() {
-		return adresse;
-	}
+  @Embedded
+  @AttributeOverride(name = "AUTH", column = @Column(name = "BENUTZER_AUTH") )
+  private Authentication authentification;
 
-	public void setAdresse(Adresse adresse) {
-		this.adresse = adresse;
-	}
+  protected Benutzer() {}
 
-	public Name getName() {
-		return name;
-	}
+  public Benutzer(Name name, Adresse adresse, Authentication authentification) {
+    super();
+    this.adresse = adresse;
+    this.name = name;
+    this.authentification = authentification;
+  }
 
-	public void setName(Name name) {
-		this.name = name;
-	}
-	
-	@Override
-	public int hashCode() {
-		return this.name.hashCode() + this.adresse.hashCode();
-	}
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public Adresse getAdresse() {
+    return adresse;
+  }
+
+  public void setAdresse(Adresse adresse) {
+    this.adresse = adresse;
+  }
+
+  public Name getName() {
+    return name;
+  }
+
+  public void setName(Name name) {
+    this.name = name;
+  }
+
+  @Override
+  public int hashCode() {
+    return this.name.hashCode() + this.adresse.hashCode();
+  }
+
+  public static Benutzer build() {
+    return new Benutzer(new Name("", "", "", ""), new Adresse("", 0, "", "", ""),
+        Authentication.build("", ""));
+  }
 
 }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Anmeldung Family Control</title>
+
+<meta charset="utf-8" />
+<meta name="description" content="Diese Seite bietet die Möglichkeit eine Ausgabe hinzuzufügen" />
+<meta name="author" content="Konrad Eichstädt" />
+</head>
+<body>
+<h2>Login</h2>
+<form action="#" th:action="@{/login}" th:object="${auth}" method="post">
+<label>Kennung</label>
+<input type="text" th:field="*{loginName}" />
+<label>Passwort</label>
+<input type="password" th:field="*{password}" />
+<input type="submit" value="Anmelden" />
+</form>
+</body>
+</html>
