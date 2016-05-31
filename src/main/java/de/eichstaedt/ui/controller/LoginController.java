@@ -32,14 +32,6 @@ public class LoginController {
 
     return "login";
   }
-  
-  @RequestMapping(value = "/logout", method = RequestMethod.GET)
-  public String logout(ModelMap model) {
-
-    model.addAttribute("auth", Authentication.build("", ""));
-
-    return "logout";
-  }
 
   @RequestMapping(value = "/login", method = RequestMethod.POST)
   public String login(@Valid Authentication auth, BindingResult bindingResult, Model model) {
