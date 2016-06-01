@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import de.eichstaedt.domain.valueobjects.Authentication;
 
 @Controller
-public class LoginController {
+public class AuthentificationController {
 
   private Authentication authentification;
 
-  private Logger logger = LoggerFactory.getLogger(LoginController.class);
+  private Logger logger = LoggerFactory.getLogger(AuthentificationController.class);
 
   @RequestMapping(value = "/login", method = RequestMethod.GET)
   public String login(ModelMap model) {

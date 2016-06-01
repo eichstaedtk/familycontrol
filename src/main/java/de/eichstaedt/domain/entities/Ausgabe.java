@@ -120,10 +120,4 @@ public class Ausgabe {
   public void setKategorie(AusgabenKategorie kategorie) {
     this.kategorie = kategorie;
   }
-
-
-
-  public static final class Builder {
-
-  }
 }
