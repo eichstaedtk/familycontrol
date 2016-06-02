@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -47,7 +48,7 @@ import de.eichstaedt.infrastructure.ports.UnternehmenPort;
 @Controller
 @RequestMapping("/ausgaben")
 @Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class AusgabenController {
+public class AusgabenController implements InitializingBean{
 
   @Autowired
   private AusgabenPort ausgabenRepository;
@@ -143,6 +144,19 @@ public class AusgabenController {
     return "redirect:ausgabenListe";
   }
 
+  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+  public void deleteAusgabe(@Valid Ausgabe ausgabe) {
+
+    logger.info("Delete a ausgabe from repository {} ", ausgabe.getId());
+
+    ausgabenRepository.delete(ausgabe);
+
+    AusgabenActionEvent event = new AusgabenActionEvent(ausgabe, DomainEvent.TYP.AUSGABE_DELETE);
+    
+    publisher.publishEvent(event);
+
+  }
+
   @ModelAttribute("alleUnternehmen")
   public List<Unternehmen> getAlleUnternehmen() {
     return (List<Unternehmen>) unternehmenRepository.findAll();
@@ -158,4 +172,10 @@ public class AusgabenController {
     return (List<AusgabenKategorie>) ausgabenKategorienRepository.findAll();
   }
 
+  @Override
+  public void afterPropertiesSet() throws Exception {
+
+    logger.info("######################### CREATION OF AUSGABENCONTROLLER ##############");
+
+  }
 }
