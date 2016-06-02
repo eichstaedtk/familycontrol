@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 import de.eichstaedt.domain.entities.Ausgabe;
 import de.eichstaedt.domain.entities.AusgabenKategorieBericht;
@@ -18,19 +20,15 @@ import de.eichstaedt.infrastructure.ports.AusgabenKategorieReport;
  * @author konrad
  *
  */
-
-public class ReportObserver implements Observer {
+@Component
+public class ReportObserver {
 
   private Logger logger = LoggerFactory.getLogger(ReportObserver.class);
 
   @Autowired
   private AusgabenKategorieReport reportRepository;
 
-  public ReportObserver(Observable observable) {
-    observable.addObserver(this);
-  }
-
-  @Override
+  @EventListener
   public void processEvent(DomainEvent event) throws Exception {
 
     logger.info("Getting Domain Event of typ {} and data class {}", event.getDataTyp(),

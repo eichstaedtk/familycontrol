@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import de.eichstaedt.domain.entities.Ausgabe;
 import de.eichstaedt.infrastructure.ports.AusgabenPort;
 
 @RestController
 @RequestMapping("/rest/ausgaben/")
+@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class AusgabenRESTController {
 
 	@Autowired

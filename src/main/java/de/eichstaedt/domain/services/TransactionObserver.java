@@ -8,17 +8,12 @@ import org.slf4j.LoggerFactory;
 import de.eichstaedt.domain.entities.Ausgabe;
 import de.eichstaedt.domain.events.DomainEvent;
 
-public class TransactionObserver implements Observer {
+public class TransactionObserver {
 
   private HashMap<String, Ausgabe> empfangendeAusgaben;
 
   private Logger logger = LoggerFactory.getLogger(TransactionObserver.class);
 
-  public TransactionObserver(Observable subject) {
-    subject.addObserver(this);
-  }
-
-  @Override
   public void processEvent(DomainEvent event) throws Exception {
 
     logger.info("Getting Domain Event of Type {} and Data Object Class {} ", event.getDataTyp(),

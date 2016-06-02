@@ -11,6 +11,9 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +29,6 @@ import de.eichstaedt.domain.entities.Benutzer;
 import de.eichstaedt.domain.entities.Unternehmen;
 import de.eichstaedt.domain.events.AusgabenActionEvent;
 import de.eichstaedt.domain.events.DomainEvent;
-import de.eichstaedt.domain.services.Observable;
-import de.eichstaedt.domain.services.Observer;
 import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
 import de.eichstaedt.infrastructure.ports.AusgabenKategoriePort;
 import de.eichstaedt.infrastructure.ports.AusgabenPort;
@@ -45,7 +46,8 @@ import de.eichstaedt.infrastructure.ports.UnternehmenPort;
 @Component
 @Controller
 @RequestMapping("/ausgaben")
-public class AusgabenController implements Observable {
+@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class AusgabenController {
 
   @Autowired
   private AusgabenPort ausgabenRepository;
@@ -58,8 +60,9 @@ public class AusgabenController implements Observable {
 
   @Autowired
   private AusgabenKategoriePort ausgabenKategorienRepository;
-
-  private List<Observer> ausgabenActionObserver = new ArrayList<Observer>();
+  
+  @Autowired
+  private ApplicationEventPublisher publisher;
 
   private Logger logger = LoggerFactory.getLogger(AusgabenController.class);
 
@@ -134,8 +137,9 @@ public class AusgabenController implements Observable {
     ausgabenRepository.save(ausgabe);
 
     AusgabenActionEvent event = new AusgabenActionEvent(ausgabe, DomainEvent.TYP.AUSGABE_CREATE);
-    this.informObserver(event);
 
+    publisher.publishEvent(event);
+    
     return "redirect:ausgabenListe";
   }
 
@@ -153,32 +157,5 @@ public class AusgabenController implements Observable {
   public List<AusgabenKategorie> getAllKategories() {
     return (List<AusgabenKategorie>) ausgabenKategorienRepository.findAll();
   }
-
-  @Override
-  public void addObserver(Observer observer) {
-    this.ausgabenActionObserver.add(observer);
-
-  }
-
-  @Override
-  public void deleteObserver(Observer observer) {
-    this.ausgabenActionObserver.remove(observer);
-
-  }
-
-  @Override
-  public void informObserver(DomainEvent event) {
-    this.ausgabenActionObserver.stream().forEach((Observer observer) -> {
-      try {
-        observer.processEvent(event);
-      } catch (Exception e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    });
-
-  }
-
-
 
 }

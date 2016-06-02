@@ -70,28 +70,4 @@ public class FamilyappApplication extends WebSecurityConfigurerAdapter{
   public Java8TimeDialect java8TimeDialect() {
     return new Java8TimeDialect();
   }
-
-  @Bean
-  public TransactionObserver getTransactionObserver() {
-
-    if (this.transactionObserver == null) {
-      System.out.println("Erzeuge neuen TransactionObserver!");
-      return new TransactionObserver(controller);
-    } else {
-      System.out.println("Gebe bestehende Instanz Referenz zurück");
-      return this.transactionObserver;
-    }
-
-  }
-
-  @Bean
-  public ReportObserver getReportObserver() {
-
-    if (this.reportObserver == null) {
-      return new ReportObserver(controller);
-    } else {
-      return this.reportObserver;
-    }
-
-  }
 }
