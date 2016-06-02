@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ import de.eichstaedt.infrastructure.ports.UnternehmenPort;
 @Component
 @Controller
 @RequestMapping("/ausgaben")
-public class AusgabenController implements Observable {
+public class AusgabenController implements Observable, InitializingBean {
 
   @Autowired
   private AusgabenPort ausgabenRepository;
@@ -139,6 +140,18 @@ public class AusgabenController implements Observable {
     return "redirect:ausgabenListe";
   }
 
+  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+  public void deleteAusgabe(@Valid Ausgabe ausgabe) {
+
+    logger.info("Delete a ausgabe from repository {} ", ausgabe.getId());
+
+    ausgabenRepository.delete(ausgabe);
+
+    AusgabenActionEvent event = new AusgabenActionEvent(ausgabe, DomainEvent.TYP.AUSGABE_DELETE);
+    this.informObserver(event);
+
+  }
+
   @ModelAttribute("alleUnternehmen")
   public List<Unternehmen> getAlleUnternehmen() {
     return (List<Unternehmen>) unternehmenRepository.findAll();
@@ -176,6 +189,13 @@ public class AusgabenController implements Observable {
         e.printStackTrace();
       }
     });
+
+  }
+
+  @Override
+  public void afterPropertiesSet() throws Exception {
+
+    logger.info("######################### CREATION OF AUSGABENCONTROLLER ##############");
 
   }
 
