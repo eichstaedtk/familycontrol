@@ -11,6 +11,7 @@ import de.eichstaedt.domain.entities.Ausgabe;
 import de.eichstaedt.domain.entities.AusgabenKategorieBericht;
 import de.eichstaedt.domain.events.DomainEvent;
 import de.eichstaedt.infrastructure.ports.AusgabenKategorieReport;
+import de.eichstaedt.infrastructure.ports.AusgabenPort;
 
 @Component
 @Scope("request")
@@ -18,10 +19,16 @@ public class AusgabenReportHandler implements DomainEventHandler {
 
   @Autowired
   private AusgabenKategorieReport reportRepository;
+  
+  private AusgabenPort ausgabenRepository;
 
   @Override
   public void handle(DomainEvent event) {
     Ausgabe ausgabe = (Ausgabe) event.getData();
+    
+    ((List<Ausgabe>)ausgabenRepository.findAll()).stream().forEach((Ausgabe ausgabe1) -> {
+    	
+    });
 
     if (((List<AusgabenKategorieBericht>) reportRepository.findAll()).stream()
         .noneMatch(report -> report.getKategorie().getId() == (ausgabe.getKategorie().getId()))
