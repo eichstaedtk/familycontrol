@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import de.eichstaedt.domain.entities.Ausgabe;
@@ -12,6 +13,7 @@ import de.eichstaedt.domain.events.DomainEvent;
 import de.eichstaedt.infrastructure.ports.AusgabenKategorieReport;
 
 @Component
+@Scope("request")
 public class AusgabenReportHandler implements DomainEventHandler {
 
   @Autowired

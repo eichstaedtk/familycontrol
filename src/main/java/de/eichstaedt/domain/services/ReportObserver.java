@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import de.eichstaedt.domain.events.AusgabenActionEvent;
 import de.eichstaedt.domain.events.DomainEvent;
 
 /**
@@ -26,8 +27,8 @@ public class ReportObserver implements InitializingBean {
   @Autowired
   private AusgabenReportHandler reportHandler;
 
-  @EventListener
-  public void processEvent(DomainEvent event) throws Exception {
+  @EventListener(classes=AusgabenActionEvent.class)
+  public void processAusgabeActionEvent(DomainEvent event) throws Exception {
 
     logger.info("Getting Domain Event of typ {} and data class {}", event.getDataTyp(),
         event.getData().getClass());
