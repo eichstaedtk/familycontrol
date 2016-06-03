@@ -14,7 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import de.eichstaedt.domain.entities.AusgabenKategorieBericht;
-import de.eichstaedt.infrastructure.ports.AusgabenKategorieReport;
+import de.eichstaedt.infrastructure.ports.AusgabenKategorieReportPort;
 
 @Component
 @Controller
@@ -23,7 +23,7 @@ import de.eichstaedt.infrastructure.ports.AusgabenKategorieReport;
 public class AusgabenKategorieReportController {
 	
 	@Autowired
-	private AusgabenKategorieReport reportRepository;
+	private AusgabenKategorieReportPort reportRepository;
 	
 	private int counter;
 	

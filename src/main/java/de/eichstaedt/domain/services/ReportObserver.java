@@ -25,16 +25,15 @@ public class ReportObserver implements InitializingBean {
   private Logger logger = LoggerFactory.getLogger(ReportObserver.class);
 
   @Autowired
-  private AusgabenReportHandler reportHandler;
+  private ReportService reportHandler;
 
-  @EventListener(classes=AusgabenActionEvent.class)
+  @EventListener(classes = AusgabenActionEvent.class)
   public void processAusgabeActionEvent(DomainEvent event) throws Exception {
 
     logger.info("Getting Domain Event of typ {} and data class {}", event.getDataTyp(),
         event.getData().getClass());
 
-    reportHandler.handle(event);
-
+    reportHandler.createReport();
   }
 
   @Override
