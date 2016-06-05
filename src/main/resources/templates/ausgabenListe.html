@@ -29,6 +29,7 @@
 		<th>Händler</th>
 		<th>Benutzer</th>
 		<th>Kategorie</th>
+		<th>Aktion</th>
 	</tr>
 </thead>
 <tbody>
@@ -40,6 +41,7 @@
 		<td th:text="${{ausgabe.haendler.name}}"></td>
 		<td th:text="${{ausgabe.benutzer.name.toString()}}"></td>
 		<td th:text="${{ausgabe.kategorie.name}}"></td>
+		<td><form action="#" th:action="@{/ausgaben/delete}" th:object="${ausgabe}" method="post"><input type="submit" value="Ausgabe löschen" /></form></td>
 	</tr>
 </tbody>
 </table>

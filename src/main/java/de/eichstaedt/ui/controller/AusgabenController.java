@@ -47,8 +47,8 @@ import de.eichstaedt.infrastructure.ports.UnternehmenPort;
 @Component
 @Controller
 @RequestMapping("/ausgaben")
-@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class AusgabenController implements InitializingBean{
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class AusgabenController implements InitializingBean {
 
   @Autowired
   private AusgabenPort ausgabenRepository;
@@ -61,7 +61,7 @@ public class AusgabenController implements InitializingBean{
 
   @Autowired
   private AusgabenKategoriePort ausgabenKategorienRepository;
-  
+
   @Autowired
   private ApplicationEventPublisher publisher;
 
@@ -140,20 +140,22 @@ public class AusgabenController implements InitializingBean{
     AusgabenActionEvent event = new AusgabenActionEvent(ausgabe, DomainEvent.TYP.AUSGABE_CREATE);
 
     publisher.publishEvent(event);
-    
+
     return "redirect:ausgabenListe";
   }
 
-  @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-  public void deleteAusgabe(@Valid Ausgabe ausgabe) {
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
+  public String deleteAusgabe(@Valid Ausgabe ausgabe) {
 
     logger.info("Delete a ausgabe from repository {} ", ausgabe.getId());
 
     ausgabenRepository.delete(ausgabe);
 
     AusgabenActionEvent event = new AusgabenActionEvent(ausgabe, DomainEvent.TYP.AUSGABE_DELETE);
-    
+
     publisher.publishEvent(event);
+
+    return "redirect:ausgabenListe";
 
   }
 
