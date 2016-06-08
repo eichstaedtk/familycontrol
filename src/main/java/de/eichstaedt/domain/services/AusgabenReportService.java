@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.eichstaedt.domain.entities.Ausgabe;
-import de.eichstaedt.domain.entities.AusgabenKategorieBericht;
+import de.eichstaedt.domain.entities.AusgabenKategorieReport;
 import de.eichstaedt.infrastructure.ports.AusgabenKategorieReportPort;
 import de.eichstaedt.infrastructure.ports.AusgabenPort;
 
@@ -33,19 +33,19 @@ public class AusgabenReportService implements ReportService {
 
     ((List<Ausgabe>) ausgabenRepository.findAll()).stream().forEach((Ausgabe ausgabe) -> {
 
-      AusgabenKategorieBericht reportAlreadyExist =
+      AusgabenKategorieReport reportAlreadyExist =
           reportRepository.findByKategorie(ausgabe.getKategorie());
 
       if (reportAlreadyExist == null) {
 
-        AusgabenKategorieBericht report = AusgabenKategorieBericht.build(ausgabe.getAmount(),
+        AusgabenKategorieReport report = AusgabenKategorieReport.build(ausgabe.getAmount(),
             ausgabe.getKategorie(), LocalDateTime.now());
 
         reportRepository.save(report);
       } else {
 
-        AusgabenKategorieBericht report =
-            AusgabenKategorieBericht.build(ausgabe.getAmount() + reportAlreadyExist.getBetrag(),
+        AusgabenKategorieReport report =
+            AusgabenKategorieReport.build(ausgabe.getAmount() + reportAlreadyExist.getBetrag(),
                 ausgabe.getKategorie(), LocalDateTime.now());
 
         reportRepository.delete(reportAlreadyExist);

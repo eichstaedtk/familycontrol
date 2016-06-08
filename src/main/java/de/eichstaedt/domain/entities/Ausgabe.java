@@ -1,6 +1,7 @@
 package de.eichstaedt.domain.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -106,11 +107,19 @@ public class Ausgabe {
 
   @Override
   public int hashCode() {
-    if (date == null | amount == null | description == null | benutzer == null)
-      return (int) (Math.random() * 10) + 1;
-    else
-      return new Integer(date.hashCode() + amount.hashCode() + description.hashCode()
-          + benutzer.hashCode() + kategorie.hashCode());
+    return Objects.hash(this.getId());
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+      
+	  if(!(obj instanceof Ausgabe))
+      {
+    	  	return false;
+      }
+	  
+	  return Objects.equals(this.getId(), ((Ausgabe)obj).getId());
+			  
   }
 
   public AusgabenKategorie getKategorie() {

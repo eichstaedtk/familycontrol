@@ -1,5 +1,7 @@
 package de.eichstaedt.domain.entities;
 
+import java.util.Objects;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -57,13 +59,20 @@ public class Unternehmen {
 	}
 	
 	@Override
-	public int hashCode() {
-		return this.name.hashCode() + this.adresse.hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-        return (this.id == ((Unternehmen)obj).getId());
-    }
+	  public int hashCode() {
+	    return Objects.hash(this.getId());
+	  }
+	  
+	  @Override
+	  public boolean equals(Object obj) {
+	      
+		  if(!(obj instanceof Unternehmen))
+	      {
+	    	  	return false;
+	      }
+		  
+		  return Objects.equals(this.getId(), ((Unternehmen)obj).getId());
+				  
+	  }
 
 }

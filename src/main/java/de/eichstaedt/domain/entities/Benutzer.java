@@ -1,5 +1,7 @@
 package de.eichstaedt.domain.entities;
 
+import java.util.Objects;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -67,7 +69,19 @@ public class Benutzer {
 
   @Override
   public int hashCode() {
-    return this.name.hashCode() + this.adresse.hashCode();
+    return Objects.hash(this.getId());
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+      
+	  if(!(obj instanceof Benutzer))
+      {
+    	  	return false;
+      }
+	  
+	  return Objects.equals(this.getId(), ((Benutzer)obj).getId());
+			  
   }
 
   public static Benutzer build() {

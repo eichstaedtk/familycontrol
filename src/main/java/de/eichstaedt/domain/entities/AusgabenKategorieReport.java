@@ -1,6 +1,7 @@
 package de.eichstaedt.domain.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,7 @@ import javax.persistence.OneToOne;
 import de.eichstaedt.domain.valueobjects.AusgabenKategorie;
 
 @Entity
-public class AusgabenKategorieBericht {
+public class AusgabenKategorieReport {
 
   @Id
   @GeneratedValue
@@ -25,11 +26,11 @@ public class AusgabenKategorieBericht {
 
   private LocalDateTime lastModified;
 
-  protected AusgabenKategorieBericht() {
+  protected AusgabenKategorieReport() {
     super();
   }
 
-  private AusgabenKategorieBericht(double betrag, AusgabenKategorie kategorie,
+  private AusgabenKategorieReport(double betrag, AusgabenKategorie kategorie,
       LocalDateTime lastModified) {
     this.betrag = betrag;
     this.kategorie = kategorie;
@@ -52,10 +53,27 @@ public double getBetrag() {
     return lastModified;
   }
 
-  public static AusgabenKategorieBericht build(double betrag, AusgabenKategorie kategorie,
+  public static AusgabenKategorieReport build(double betrag, AusgabenKategorie kategorie,
       LocalDateTime date) {
-    AusgabenKategorieBericht report = new AusgabenKategorieBericht(betrag, kategorie, date);
+    AusgabenKategorieReport report = new AusgabenKategorieReport(betrag, kategorie, date);
     return report;
+  }
+  
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.getId());
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+      
+	  if(!(obj instanceof AusgabenKategorieReport))
+      {
+    	  	return false;
+      }
+	  
+	  return Objects.equals(this.getId(), ((AusgabenKategorieReport)obj).getId());
+			  
   }
 
 }
