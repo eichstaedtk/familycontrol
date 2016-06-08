@@ -8,6 +8,16 @@
 <meta name="author" content="Konrad Eichstädt" />
 </head>
 <body>
+<nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="/index.jsf">Home</a></li>
+                  <li><a href="/ausgaben/ausgabenListe.jsf">Ausgaben</a></li>
+                  <li><a href="/ausgaben/add.jsf">Ausgaben hinzufügen</a></li>
+                  <li><a href="/ausgaben/kategorieReport.jsf">Report</a></li>
+                  <li><a href="/login.jsf">Login</a></li>
+                  <li><a href="/logout.jsf">Logout</a></li>
+                </ul>
+              </nav>
 <div id="ausgabenListe" th:unless="${#lists.isEmpty(alleAusgaben)}">
 <table>
 <thead>
@@ -19,6 +29,7 @@
 		<th>Händler</th>
 		<th>Benutzer</th>
 		<th>Kategorie</th>
+		<th>Aktion</th>
 	</tr>
 </thead>
 <tbody>
@@ -30,6 +41,7 @@
 		<td th:text="${{ausgabe.haendler.name}}"></td>
 		<td th:text="${{ausgabe.benutzer.name.toString()}}"></td>
 		<td th:text="${{ausgabe.kategorie.name}}"></td>
+		<td><form action="#" th:action="@{/ausgaben/delete}" th:object="${ausgabe}" method="post"><input type="submit" value="Ausgabe löschen" /></form></td>
 	</tr>
 </tbody>
 </table>

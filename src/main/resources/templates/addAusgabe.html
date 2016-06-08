@@ -12,6 +12,15 @@
 <script src="../../jquery.datetimepicker.full.js"></script>
 </head>
 <body>
+<nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="/index.jsf">Home</a></li>
+                  <li><a href="/ausgaben/ausgabenListe.jsf">Ausgaben</a></li>
+                  <li><a href="/ausgaben/kategorieReport.jsf">Report</a></li>
+                  <li><a href="/login.jsf">Login</a></li>
+                  <li><a href="/logout.jsf">Logout</a></li>
+                </ul>
+              </nav>
 <h2>Ausgabe hinzufügen</h2>
 <form action="#" th:action="@{/ausgaben/add}" th:object="${ausgabe}" method="post">
 <label>Datum</label>

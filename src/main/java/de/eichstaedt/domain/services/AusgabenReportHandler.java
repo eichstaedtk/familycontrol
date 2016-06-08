@@ -10,14 +10,15 @@ import org.springframework.stereotype.Component;
 import de.eichstaedt.domain.entities.Ausgabe;
 import de.eichstaedt.domain.entities.AusgabenKategorieBericht;
 import de.eichstaedt.domain.events.DomainEvent;
-import de.eichstaedt.infrastructure.ports.AusgabenKategorieReport;
+import de.eichstaedt.infrastructure.ports.AusgabenKategorieReportPort;
+
 
 @Component
 @Scope("request")
 public class AusgabenReportHandler implements DomainEventHandler {
 
   @Autowired
-  private AusgabenKategorieReport reportRepository;
+  private AusgabenKategorieReportPort reportRepository;
 
   @Override
   public void handle(DomainEvent event) {
