@@ -115,7 +115,7 @@ public class AusgabenController implements InitializingBean {
 
 
     model.addAttribute("alleAusgaben", result);
-
+    model.addAttribute("ausgabe", new Ausgabe());
 
     return "ausgabenListe";
   }
@@ -145,13 +145,13 @@ public class AusgabenController implements InitializingBean {
   }
 
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
-  public String deleteAusgabe(@Valid Ausgabe ausgabe) {
+  public String deleteAusgabe(@Valid Ausgabe ausgabe, BindingResult bindingResult, Model model) {
+	  logger.info(
+		        "Trying to delete the Ausgabe {} ",ausgabe.getId());
 
-    logger.info("Delete a ausgabe from repository {} ", ausgabe.getId());
-
-    ausgabenRepository.delete(ausgabe);
-
-    AusgabenActionEvent event = new AusgabenActionEvent(ausgabe, DomainEvent.TYP.AUSGABE_DELETE);
+    AusgabenActionEvent event = new AusgabenActionEvent(ausgabenRepository.findOne(ausgabe.getId()), DomainEvent.TYP.AUSGABE_DELETE);
+    
+    ausgabenRepository.delete(ausgabe.getId());
 
     publisher.publishEvent(event);
 

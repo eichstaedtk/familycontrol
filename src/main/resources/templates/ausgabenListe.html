@@ -41,7 +41,7 @@
 		<td th:text="${{ausgabe.haendler.name}}"></td>
 		<td th:text="${{ausgabe.benutzer.name.toString()}}"></td>
 		<td th:text="${{ausgabe.kategorie.name}}"></td>
-		<td><form action="#" th:action="@{/ausgaben/delete}" th:object="${ausgabe}" method="post"><input type="submit" value="Ausgabe löschen" /></form></td>
+		<td><form action="#" th:action="@{/ausgaben/delete}" method="post"><input th:field="${ausgabe.id}" type="hidden"></input><input type="submit" value="Ausgabe löschen" /></form></td>
 	</tr>
 </tbody>
 </table>
