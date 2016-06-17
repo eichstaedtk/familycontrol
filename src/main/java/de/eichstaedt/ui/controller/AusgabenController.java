@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -117,7 +118,7 @@ public class AusgabenController implements InitializingBean {
 
 
     model.addAttribute("alleAusgaben", result);
-    model.addAttribute("ausgabenidToDelete", ausgabenIdDelete);
+    model.addAttribute("ausgabeForDelete", new Ausgabe());
 
     return "ausgabenListe";
   }
@@ -132,7 +133,6 @@ public class AusgabenController implements InitializingBean {
 
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public String addAusgabe(@Valid Ausgabe ausgabe, BindingResult bindingResult, Model model) {
-
     logger.info(
         "Trying to save the new Ausgabe {} description {}  date {} Unternehmen {} Betrag {} ",
         ausgabe.getId(), ausgabe.getDescription(), ausgabe.getDate(),
@@ -146,19 +146,20 @@ public class AusgabenController implements InitializingBean {
     return "redirect:ausgabenListe";
   }
 
-  @RequestMapping(value = "/delete", method = RequestMethod.POST)
-  public String deleteAusgabe(Integer ausgabenid, BindingResult bindingResult, Model model) {
-    logger.info("Trying to delete the Ausgabe {} ", ausgabenIdDelete);
+  @RequestMapping(value = "/delete", method = RequestMethod.POST, params = {"loeschen"})
+  public String deleteAusgabe(final HttpServletRequest req) {
 
-    AusgabenActionEvent event = new AusgabenActionEvent(ausgabenRepository.findOne(ausgabenid),
+    logger.info("Trying to delete the Ausgabe {} ", req.getParameter("loeschen"));
+
+    AusgabenActionEvent event = new AusgabenActionEvent(
+        ausgabenRepository.findOne(Integer.parseInt(req.getParameter("loeschen"))),
         DomainEvent.TYP.AUSGABE_DELETE);
 
-    ausgabenRepository.delete(ausgabenid);
+    ausgabenRepository.delete(Integer.parseInt(req.getParameter("loeschen")));
 
     publisher.publishEvent(event);
 
     return "redirect:ausgabenListe";
-
   }
 
   @ModelAttribute("alleUnternehmen")
